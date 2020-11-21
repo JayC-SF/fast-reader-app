@@ -1,0 +1,76 @@
+/* KRISTINA AMEND ID: 0735252 & JUAN-CARLOS SRENG-FLORES ID: ###### - PROJECT 2 */
+
+/* used from prev assignment, we can change later to suit the overall look */
+
+* {
+  font-family: "Roboto Mono";
+  box-sizing: border-box;
+}
+body {
+  background-color: #fafafa;
+}
+/* speed reader block */
+.speedReader {
+  margin: auto;
+  width: 80%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+}
+/* styles footer */
+footer,
+a {
+  text-align: center;
+  font-family: "Roboto Mono";
+  font-size: 14px;
+  padding: 10px;
+}
+footer {
+  background-color: #007c88;
+  width: fit-content;
+  margin: auto;
+  /*width: 400px;*/
+  margin-top: 10px;
+}
+/* styles links */
+a {
+  font-weight: 600;
+  font-size: 16px;
+}
+a:hover {
+  color: rgba(0, 0, 0, 0.541);
+}
+a:visited {
+  color: black;
+}
+a:focus {
+  color: white;
+}
+/* styles the section where the quote will be displayed */
+p {
+  padding: 1%;
+  width: 50%;
+  height: 40px;
+  border: 1px solid black;
+  margin: auto;
+}
+/* start / stop button */
+#stop_start {
+  width: 100px;
+}
+/* words per minute label */
+#wpmLabel {
+  font-variant: small-caps;
+}
+/* button, label, input area */
+#inputArea {
+  margin: auto;
+}
+#focusChar{
+  color: rgb(173, 0, 0);
+}
+/* needs more css for span */
+span {
+  font-weight: bold;
+}
