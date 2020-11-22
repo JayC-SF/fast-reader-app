@@ -17,11 +17,27 @@ If it does, update the input tag to reflect the speed
 
 function setup() {
     globals.startState = true; // application starts in the stop state (button start state is true / "START" on load)
+    globals.currentWPMValue = localStorage.getItem('wpmCount'); // sets global variable to current local storage
+    globals.userWPMInput = document.querySelector('#wpmCount'); // input value the user selected
+    globals.userWPMInput.addEventListener('input', updateLocalStorage); // event fired when user changes number
+    if (globals.currentWPMValue != null) { // check if there is anything in localStorage to retrieve 
+        loadLocalStorage();
+    }
+    else{
+        document.querySelector('#wpmCount').value = "100"; // set the default value to 100 if nothing in local storage
+    }
     globals.startStopBtn = document.querySelector('#stop_start');
-    globals.startStopBtn.addEventListener('click', startStop);
-
+    globals.startStopBtn.addEventListener('click', startStop); // sets up event listener for start/stop button
 }
 
+function loadLocalStorage() { // reads from local storage when the page loads, and initializes the global WPM count varaible
+    // parse the data in storage
+    globals.currentWPMValue = JSON.parse(localStorage.getItem('wpmCount'));
+    globals.userWPMInput.value = globals.currentWPMValue; // set the input number value from local storage
+}
+function updateLocalStorage() { // stringifys the global variable and updates the local storage
+    localStorage.setItem('wpmCount', JSON.stringify(globals.userWPMInput.value));
+}
 /*startStop start/stop button event listener
 -> if the button is in start state, invoke the get next quote function, change the state to start and change the button text to stop
 -> if the button is in stop state, change the state to stop and change the button text to start. Clear the interval
@@ -55,7 +71,7 @@ function getNext(e) {
         }
     })
         // option 1 ? .. don't use function at all, don't think she'll like this
-        .then(json => displayQuote(JSON.stringify(json).split('\s'))) // if response is ok invoke strSplitter which returns a split []
+        .then(json => displayQuote(JSON.stringify(json).split(" "))) // if response is ok invoke strSplitter which returns a split []
         /* option 2 ? unnamed function --> not sure how to call displayQuote with unnamed function
         .then((json => function(){
             return JSON.stringify(json).split('\s')
@@ -70,7 +86,7 @@ separated by a space. Hint: look into the String split method. Note: this does n
 
 // use function or unnamed function?
 function strSplitter(json) {
-    return JSON.stringify(json).split('\s'); // splits sentence on whitespace
+    return JSON.stringify(json).split(" "); // splits sentence on whitespace
 }
 /*displayQuote display quote function
  takes the array of words as a parameter. It uses setInterval to help achieve the words-per-minute rate
