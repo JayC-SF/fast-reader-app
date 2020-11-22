@@ -51,6 +51,7 @@ footer {
   margin: auto;
   /*width: 400px;*/
   margin-top: 10px;
+  width: 100%;
 }
 /* styles links */
 a {
@@ -68,11 +69,13 @@ a:focus {
 }
 /* styles the section where the quote will be displayed */
 p {
-  padding: 1%;
-  width: 30%;
-  height: 40px;
+  padding: 0.5em 0 0.5em 7em;
+  /*width: 30%;*/
+  min-width: 25em;
   border: 1px solid black;
-  margin: 0 30% 1% 30%;
+  margin: auto auto 2em auto;
+  text-align: left;
+  align-items: center;
 }
 /* start / stop button */
 #stop_start {
@@ -92,4 +95,5 @@ p {
 /* needs more css for span */
 span {
   font-weight: bold;
+  white-space: pre; /*Preserves white-spaces*/
 }

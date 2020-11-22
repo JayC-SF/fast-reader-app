@@ -18,6 +18,9 @@ If it does, update the input tag to reflect the speed
 function setup() {
     globals.startState = true; // application starts in the stop state (button start state is true / "START" on load)
     globals.currentWPMValue = localStorage.getItem('wpmCount'); // sets global variable to current local storage
+    globals.beforeFocus = document.querySelector('#beforeFocus'); //beforeFocus span element.
+    globals.focusChar = document.querySelector('#focusChar'); //focusCharacter.
+    globals.afterFocus = document.querySelector('#afterFocus'); //afterFocus character.
     globals.userWPMInput = document.querySelector('#wpmCount'); // input value the user selected
     globals.userWPMInput.addEventListener('input', updateLocalStorage); // event fired when user changes number
     if (globals.currentWPMValue != null) { // check if there is anything in localStorage to retrieve 
@@ -118,7 +121,7 @@ function displayQuote(quoteSplit) {
             }
         }
     }, interval);
-    console.log(quoteSplit); // making sure code reaches here!
+    //console.log(quoteSplit); // making sure code reaches here!
 }
 /**
 displayWord display word function
@@ -135,6 +138,45 @@ ask for the next quote by invoking the quote fetching function.
     @return {void} - Only displays the word into the html element.
 */
 function displayWord(word) {
-    console.log(word); //Test if it works!
-
+    console.log(word); //Test if it works! to be removed later.    
+    if(word.length <= 1) {
+        //display 4 spaces before focus character.
+        globals.beforeFocus.textContent = '    ';
+        //display focus character.
+        globals.focusChar.textContent = word; 
+        //display nothing after focus character.
+        globals.afterFocus.textContent = '';
+    }
+    else if(word.length <= 5) {
+        //display 3 spaces and the first character before focus character.
+        globals.beforeFocus.textContent = '   ' + word.charAt(0); 
+        //display 2nd character of the word.
+        globals.focusChar.textContent = word.charAt(1);
+        //display from 3rd character to the end if there are any characters left.
+        globals.afterFocus.textContent = word.substring(2);
+    }
+    else if(word.length <= 9) {
+        //display 2 spaces and 1st && 2nd characters of the word.
+        globals.beforeFocus.textContent = '  ' + word.substring(0,2);
+        //display 3rd character as the focus character.
+        globals.focusChar.textContent = word.charAt(2);
+        //display rest of the word from 4th to the end.
+        globals.afterFocus.textContent = word.substring(3);
+    }
+    else if(word.length <= 13) {
+        //display 1 space and the first 3 characters.
+        globals.beforeFocus.textContent = ' ' + word.substring(0,3);
+        //display 4th character as focus character.
+        globals.focusChar.textContent = word.charAt(3);
+        //display from 5th character to the end.
+        globals.afterFocus.textContent = word.substring(4);
+    }
+    else {
+        //display no spaces and the first 4 characters.
+        globals.beforeFocus.textContent = word.substring(0,4);
+        //display 5th character as focus character.
+        globals.focusChar.textContent = word.charAt(4);
+        //display rest of the string from 6th character to the end.
+        globals.afterFocus.textContent = word.substring(5);
+    }
 }
