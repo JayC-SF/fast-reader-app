@@ -91,10 +91,14 @@ function getNext(e) {
 function strSplitter(json) {
     return json[0].split(" "); // splits sentence on whitespace
 }
-/*displayQuote display quote function
- takes the array of words as a parameter. It uses setInterval to help achieve the words-per-minute rate
-(e.g., if the rate is 50 words per minute, the delay between words is 60000 ms/minute divided by 50 words/minute equals 1200 ms between words).
-setInterval uses a display word function as callback.*/
+/**
+ * displayQuote display quote function
+ * takes the array of words as a parameter. It uses setInterval to help achieve the words-per-minute rate
+ * (e.g., if the rate is 50 words per minute, the delay between words is 60000 ms/minute divided by 50 words/minute equals 1200 ms between words).
+ * setInterval uses a display word function as callback.
+ * @param {Array} quoteSplit - String array containing splitted words to be displayed.
+ * @return {void} - this method simply executes the window.setInterval asynchronous function.
+ */
 function displayQuote(quoteSplit) {
     let interval = 60000/globals.userWPMInput.value; // calculates the words per minute
     // counter for interval
@@ -102,9 +106,17 @@ function displayQuote(quoteSplit) {
     //interval loop, calls display quote for specific index, uses modulo to not get index out of bounds.
     //interval variable sets the time between the words to be displayed.
     globals.intervalID = window.setInterval(() => {
-        displayWord(quoteSplit[i]);
-        i++;
-        i%=quoteSplit.length;
+        if(i<quoteSplit.length) {
+            displayWord(quoteSplit[i]);
+            i++;
+        }
+        else {
+            window.clearInterval(globals.intervalID);
+            if(!globals.startState) {
+                globals.startState = true;
+                startStop();
+            }
+        }
     }, interval);
     console.log(quoteSplit); // making sure code reaches here!
 }
@@ -120,7 +132,9 @@ letters in the after span. Do NOT use innerHTML! Look at the String substring me
 -> after updating the DOM, increment the token counter. If you reach the end of the array, clearInterval. If you are not in a stop state,
 ask for the next quote by invoking the quote fetching function.
     @param {String} word - Word to display when the user presses START.
+    @return {void} - Only displays the word into the html element.
 */
 function displayWord(word) {
-    console.log(word); //Test if it works.
+    console.log(word); //Test if it works!
+
 }
