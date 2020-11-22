@@ -69,10 +69,10 @@ a:focus {
 /* styles the section where the quote will be displayed */
 p {
   padding: 1%;
-  width: 50%;
+  width: 30%;
   height: 40px;
   border: 1px solid black;
-  margin: auto;
+  margin: 0 30% 1% 30%;
 }
 /* start / stop button */
 #stop_start {
