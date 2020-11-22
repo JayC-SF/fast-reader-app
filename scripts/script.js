@@ -138,7 +138,7 @@ ask for the next quote by invoking the quote fetching function.
     @return {void} - Only displays the word into the html element.
 */
 function displayWord(word) {
-    console.log(word); //Test if it works! to be removed later.    
+    //console.log(word); //Test if it works! to be removed later.    
     if(word.length <= 1) {
         //display 4 spaces before focus character.
         globals.beforeFocus.textContent = '    ';
