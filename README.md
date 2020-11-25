@@ -7,7 +7,7 @@ A simple implementation of a speed reader that display quotes from popular Parks
 The user can adjust the words per minute speed (defaults at 100) and select START/STOP to get the next quote. 
 The quotes are fetched randomly from an API that returns a single JSON. 
 Quotes are displayed one word at a time, with each focus letter in red (which is dependant on the words length).
-Note: the WPM speed can only adjusted by pressing STOP and START again.
+Note: the WPM speed can only be adjusted by pressing STOP and START again.
 
 More about speed reading: Displaying the words at a variable speed and fixating on a specific character triggers the brain to recognize that word quickly. This eliminates internally speaking the words and not having to move our eyes as we read, therefore increasing one's ability to speed read!
 
