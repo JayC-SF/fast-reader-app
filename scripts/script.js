@@ -1,20 +1,21 @@
 "use strict";
 /**
- * 
+ * A simple implementation of a speed reader that display quotes word by word, at a variable speed
+ * Quotes are retrieved from an API and displayed in the HTML
+ * The user can adjust the words per minute speed and select START to display each quote and STOP to stop
  * @author Kristina Amend
  * @author Juan-Carlos Sreng-Flores
  * @version 2020-11
  */
-let globals = {} // define global object
+let globals = {} // define global object to store variables
 document.addEventListener('DOMContentLoaded', setup)
-
-/*setup function event listener for DOMContentLoaded:
--> Note this one is not suggested, it is required.
--> initializes any global variables. The application starts in the stop state.
--> checks if the local storage contains a word-per-minute speed and saves as a variable. If not, set it to 100.
-If it does, update the input tag to reflect the speed
--> adds event listeners for the numeric input change event and for the start/stop button*/
-
+/**
+ * Initializes global variables once the DOM is loaded and updates the WPM speed from local storage (default is 100)
+ * Adds event listeners for numerical input change and for the START/STOP button
+ * On load the speed reader is the on stop state, user must select start to display quote(s)
+ * @author Kristina Amend
+ * @author Juan-Carlos Sreng-Flores
+ */
 function setup() {
     globals.startState = true; // application starts in the stop state (button start state is true / "START" on load)
     globals.currentWPMValue = localStorage.getItem('wpmCount'); // sets global variable to current local storage
@@ -32,40 +33,50 @@ function setup() {
     globals.startStopBtn = document.querySelector('#stop_start');
     globals.startStopBtn.addEventListener('click', startStop); // sets up event listener for start/stop button
 }
-
-function loadLocalStorage() { // reads from local storage when the page loads, and initializes the global WPM count varaible
-    // parse the data in storage
-    globals.currentWPMValue = JSON.parse(localStorage.getItem('wpmCount'));
+/**
+ * Reads from local storage when the page loads, and initializes the global WPM count variable
+ * @author Kristina Amend
+ */
+function loadLocalStorage() {
+    globals.currentWPMValue = JSON.parse(localStorage.getItem('wpmCount')); // parse the data from storage
     globals.userWPMInput.value = globals.currentWPMValue; // set the input number value from local storage
 }
-function updateLocalStorage() { // stringifys the global variable and updates the local storage
+/**
+ * Stringifys the global variable (numerical user input) and updates the local storage
+ * @author Kristina Amend
+ */
+function updateLocalStorage() { // 
     localStorage.setItem('wpmCount', JSON.stringify(globals.userWPMInput.value));
 }
-/*startStop start/stop button event listener
--> if the button is in start state, invoke the get next quote function, change the state to start and change the button text to stop
--> if the button is in stop state, change the state to stop and change the button text to start. Clear the interval
-(the interval identifier must be saved as a global variable)*/
+/**
+ * function that is triggered by the button event listener
+ * when button is in start state getNext() is called to get the next quote
+ * when button is in stop state the global interval id is cleared
+ * @author Kristina Amend
+ * @author Juan-Carlos Sreng-Flores
+ */
 function startStop() {
     if (globals.startState) {
         getNext();
         globals.startStopBtn.textContent = "STOP";
         globals.startState = false;
     }
-    // *JS* can you double check my logic here...? the instructions are not clear / doesn't make sense to me based on how the button should work
     else {
         window.clearInterval(globals.intervalID);
         globals.startStopBtn.textContent = "START";
         globals.startState = true;
     }
 }
-
-/*getNext get next quote function
--> fetches a random quote from the Ron Swanson API https://ron-swanson-quotes.herokuapp.com/v2/quotes using the fetch API.
--> then invokes the string splitter function
--> then invokes the displayQuote function
--> in case of any error, write a message to console.log.*/
+/**
+ * fetches a random quote from the Ron Swanson API
+ * invokes strSplitter to split the quote in words
+ * invokes displayQuote which passes the resulting split[]
+ * Catches and displays any errors to the console
+ * @author Kristina Amend
+ * @param {*} e any event
+ */
 function getNext(e) {
-    let url = "https://ron-swanson-quotes.herokuapp.com/v2/quotes";
+    let url = "https://ron-swanson-quotes.herokuapp.com/v2/qduotes";
     fetch(url).then(response => {
         if (!response.ok) {
             throw new Error('Error status code: ' + response.status);
@@ -74,23 +85,15 @@ function getNext(e) {
             return response.json();
         }
     })
-        // option 1 ? .. don't use function at all, don't think she'll like this
         .then(json => displayQuote(strSplitter(json))) // if response is ok invoke strSplitter which returns a split []
-        /* option 2 ? unnamed function --> not sure how to call displayQuote with unnamed function
-        .then((json => function(){
-            return JSON.stringify(json).split('\s')
-        })*/
-        /* option 3 ? use strSplitter function
-        //.then(json => displayQuote(strSplitter(json))) */
-        .catch(e => console.log(e + "You broke Ron Swanson's spirit")); // catch the error and display it
+        .catch(e => console.log(e.message + " You broke Ron Swanson's spirit")); // catch the error and display it
 }
 /**
-    strSplitter string splitter function
-    -> breaks the quote string into an array of tokens and returns the array. A token is a single word (including punctuation)
-    separated by a space. Hint: look into the String split method. Note: this does not need to be a named function.
-    @param {JSON} json - JSON object fetched from web API.
-    @return {Array} - Returns a string array splitted by white spaces. 
-*/
+ * Separates the quote string into an array of words
+ * @author Juan-Carlos Sreng-Flores
+ * @param {JSON} json - JSON object fetched from web API.
+ * @return {Array} - Returns a string array splitted by white spaces. 
+ */
 function strSplitter(json) {
     return json[0].split(" "); // splits sentence on whitespace
 }
