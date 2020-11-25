@@ -1,15 +1,13 @@
-/* KRISTINA AMEND ID: 0735252 & JUAN-CARLOS SRENG-FLORES ID: ###### - PROJECT 2 */
-
-/* used from prev assignment, we can change later to suit the overall look */
+/* KRISTINA AMEND ID: 0735252 & JUAN-CARLOS SRENG-FLORES ID: 1533920 - PROJECT 2 */
 
 * {
   font-family: "Roboto Mono";
   box-sizing: border-box;
 }
 /*Make sure the website spans the whole page.*/
-html{
+html {
   width: 100%;
-  height:100%;
+  height: 100%;
 }
 /*Makes sure the body spans the whole page, and display flex to push footer to the bottom.*/
 body {
@@ -20,7 +18,7 @@ body {
   flex-direction: column;
 }
 /*This will push the footer to the bottom*/
-main{
+main {
   flex-grow: 2;
 }
 /* speed reader block */
@@ -31,10 +29,9 @@ main{
   flex-direction: column;
   align-items: flex-start;
   justify-content: space-evenly;
-  /*lex-wrap: wrap;*/
 }
 /*Make header centered.*/
-h1{
+h1 {
   margin: 0 auto 1em auto;
 }
 /* styles footer */
@@ -49,7 +46,6 @@ footer {
   background-color: #007c88;
   width: fit-content;
   margin: auto;
-  /*width: 400px;*/
   margin-top: 10px;
   width: 100%;
 }
@@ -69,13 +65,15 @@ a:focus {
 }
 /* styles the section where the quote will be displayed */
 p {
+  background-color: #fafafa;
   padding: 0.5em 0 0.5em 7em;
-  /*width: 30%;*/
   min-width: 25em;
   border: 1px solid black;
-  margin: auto auto 2em auto;
+  margin: 1em auto 2em auto;
   text-align: left;
   align-items: center;
+  border: 1px solid #1c6ea49c;
+  border-radius: 7px;
 }
 /* start / stop button */
 #stop_start {
@@ -84,16 +82,33 @@ p {
 /* words per minute label */
 #wpmLabel {
   font-variant: small-caps;
+  font-size: 18px;
 }
 /* button, label, input area */
 #inputArea {
   margin: auto;
 }
-#focusChar{
+#focusChar {
   color: rgb(173, 0, 0);
 }
 /* needs more css for span */
 span {
   font-weight: bold;
   white-space: pre; /*Preserves white-spaces*/
+}
+#ronswansonimg {
+  width: 700px;
+  margin: auto;
+  box-shadow: 0px 0px 59px -6px rgba(0, 0, 0, 0.54);
+}
+#beforeFocus {
+  margin-left: 10px;
+}
+#afterFocus {
+  margin-right: 10px;
+}
+#beforeFocus,
+#afterFocus,
+#focusChar {
+  font-size: 18px;
 }
