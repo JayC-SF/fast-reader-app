@@ -1,4 +1,4 @@
-<!-- KRISTINA AMEND ID: 0735252 & JUAN-CARLOS SRENG-FLORES ID: ###### - PROJECT 2 -->
+<!-- KRISTINA AMEND ID: 0735252 & JUAN-CARLOS SRENG-FLORES ID: 1533920 - PROJECT 2 -->
 <!DOCTYPE html>
 <html lang="en-US">
 
@@ -14,21 +14,24 @@
 <body>
     <main>
         <div class="speedReader">
-            <h1>Real men can read fast!</h1><!-- maybe change text display later -->
+            <h1>Real men can read fast!</h1>
+            <img src="images/readlikeman.png" alt="Ron Swanson's How To Be A Man Handbook" id="ronswansonimg">
+            <!-- Ron Swanson Handbook image source: https://media.babylonbee.com/articles/article-3561-1.jpg -->
             <p id="quoteText">
                 <!-- where the quote will be displayed word by word -->
-                <span id="beforeFocus">a</span><span id="focusChar">b</span><span id="afterFocus">c</span>
+                <span id="beforeFocus"></span><span id="focusChar"></span><span id="afterFocus"></span>
                 <!-- beforeFocus will display characters before the focus character -->
                 <!-- focusChar will display the focus character -->
                 <!-- afterFocus will display for the remaining characters -->
             </p>
             <section id="inputArea">
-                <button type='button' id="stop_start">START</button>
+                <button type='button' id="stop_start" value="true">START</button>
                 <label for="wpmCount" id="wpmLabel">Words Per Minute:</label>
                 <input type="number" id="wpmCount" name="wpmCount" value="100" step="50" min="50" max="1000">
             </section>
         </div>
     </main>
+
     <footer class="footer">
         Created by: Kristina Amend ID: 0735252 & Juan-Carlos Sreng-Flores ID: 1533920 - 2020<br>
         <a href="https://ron-swanson-quotes.herokuapp.com/v2/quotes" target="_blank">Ron Swanson quote source</a>
