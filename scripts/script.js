@@ -76,7 +76,7 @@ function startStop() {
  * @param {*} e any event
  */
 function getNext(e) {
-    let url = "https://ron-swanson-quotes.herokuapp.com/v2/qduotes";
+    let url = "https://ron-swanson-quotes.herokuapp.com/v2/quotes";
     fetch(url).then(response => {
         if (!response.ok) {
             throw new Error('Error status code: ' + response.status);
