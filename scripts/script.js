@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', setup)
  * On load the speed reader is the on stop state, user must select start to display quote(s)
  * @author Kristina Amend
  * @author Juan-Carlos Sreng-Flores
+ * @return {void} - Does not return any value.
  */
 function setup() {
     globals.startState = true; // application starts in the stop state (button start state is true / "START" on load)
@@ -36,6 +37,7 @@ function setup() {
 /**
  * Reads from local storage when the page loads, and initializes the global WPM count variable
  * @author Kristina Amend
+ * @return {void} - Does not return any value.
  */
 function loadLocalStorage() {
     globals.currentWPMValue = JSON.parse(localStorage.getItem('wpmCount')); // parse the data from storage
@@ -44,6 +46,7 @@ function loadLocalStorage() {
 /**
  * Stringifys the global variable (numerical user input) and updates the local storage
  * @author Kristina Amend
+ * @return {void} - Does not return any value.
  */
 function updateLocalStorage() { // 
     localStorage.setItem('wpmCount', JSON.stringify(globals.userWPMInput.value));
@@ -54,6 +57,7 @@ function updateLocalStorage() { //
  * when button is in stop state the global interval id is cleared
  * @author Kristina Amend
  * @author Juan-Carlos Sreng-Flores
+ * @return {void} - Does not return any value.
  */
 function startStop() {
     if (globals.startState) {
@@ -73,7 +77,8 @@ function startStop() {
  * invokes displayQuote which passes the resulting split[]
  * Catches and displays any errors to the console
  * @author Kristina Amend
- * @param {*} e any event
+ * @param {Event} e any event
+ * @return {void} - Does not return any value.
  */
 function getNext(e) {
     let url = "https://ron-swanson-quotes.herokuapp.com/v2/quotes";
@@ -98,10 +103,12 @@ function strSplitter(json) {
     return json[0].split(" "); // splits sentence on whitespace
 }
 /**
- * displayQuote display quote function
- * takes the array of words as a parameter. It uses setInterval to help achieve the words-per-minute rate
- * (e.g., if the rate is 50 words per minute, the delay between words is 60000 ms/minute divided by 50 words/minute equals 1200 ms between words).
- * setInterval uses a display word function as callback.
+ * Display quote is a function set up to loop through the quote given asynchronously.
+ * It uses setInterval to loop, and uses the word per minute value from the global variable 
+ * userWPMInput. 
+ * The interval is calculated from 60000 miliseconds divided by the number of words, making 
+ * an interval value that will display the quote at each interval.
+ * To display the word is uses the method displayWord(String).
  * @param {Array} quoteSplit - String array containing splitted words to be displayed.
  * @return {void} - this method simply executes the window.setInterval asynchronous function.
  */
@@ -127,18 +134,19 @@ function displayQuote(quoteSplit) {
     //console.log(quoteSplit); // making sure code reaches here!
 }
 /**
-displayWord display word function
--> takes the array of words as a parameter, and uses a global variable (or a captured variable if you code this as an anonymous function
-    closure within the displayQuote function) to keep track of the index of the word it needs to display
--> In order to display each word, choose a focus letter based off the length of the word and “center” the word around the focus letter
-(not really centered, see algorithm below): see project instructions
-
--> This means you will be splitting up the word, with some letters in the before span, the focus letter in the span tag, and remaining
-letters in the after span. Do NOT use innerHTML! Look at the String substring method.
--> after updating the DOM, increment the token counter. If you reach the end of the array, clearInterval. If you are not in a stop state,
-ask for the next quote by invoking the quote fetching function.
-    @param {String} word - Word to display when the user presses START.
-    @return {void} - Only displays the word into the html element.
+ * This function displays the word into the website with specific format.
+ * length = 1 => 1st letter         e.g.: ____|a| or 4 spaces before
+ * length = 2-5 => 2nd letter       e.g.: ___f|o|ur or 3 spaces before
+ *                                  e.g.: ___l|a|tch or 3 spaces before
+ * length = 6-9 => third letter     e.g.: __em|b|assy 2 spaces
+ * length = 10-13 => fourth letter  e.g.: _pla|y|ground 1 spaces
+ * length >13 => fifth letter       e.g.: ackn|o|wledgement no spaces
+ * Where the letters before the | are to be put into the first span, the letter between
+ * the | is to be put into the second span, and the letters after the | is to be put into
+ * the third span.
+ * Depending on the size of the word, some space will be added for padding.
+ * @param {String} word - Word to be displayed with specified format.
+ * @return {void} - Only displays the word into the html element.
 */
 function displayWord(word) {
     //console.log(word); //Test if it works! to be removed later.    
