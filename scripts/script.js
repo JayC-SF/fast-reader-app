@@ -109,6 +109,7 @@ function strSplitter(json) {
  * The interval is calculated from 60000 miliseconds divided by the number of words, making 
  * an interval value that will display the quote at each interval.
  * To display the word is uses the method displayWord(String).
+ * @author Juan-Carlos Sreng-Flores
  * @param {Array} quoteSplit - String array containing splitted words to be displayed.
  * @return {void} - this method simply executes the window.setInterval asynchronous function.
  */
@@ -145,6 +146,7 @@ function displayQuote(quoteSplit) {
  * the | is to be put into the second span, and the letters after the | is to be put into
  * the third span.
  * Depending on the size of the word, some space will be added for padding.
+ * @author Juan-Carlos Sreng-Flores
  * @param {String} word - Word to be displayed with specified format.
  * @return {void} - Only displays the word into the html element.
 */
