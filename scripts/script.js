@@ -50,9 +50,15 @@ function loadLocalStorage() {
  * @return {void} - Does not return any value.
  */
 function updateLocalStorage(e) { 
-    //causes the user to not be able to exceed the boundaries. 
+    //causes the user to not be able to exceed the boundaries. Fixes the number if it does not conform the data.
     if(globals.userWPMInput.value >= 50 && globals.userWPMInput.value <= 1000) {
         localStorage.setItem('wpmCount', JSON.stringify(roundFifty(globals.userWPMInput.value)));
+    }
+    else if(globals.userWPMInput.value < 50) {
+        localStorage.setItem('wpmCount', JSON.stringify(50));
+    }
+    else{
+        localStorage.setItem('wpmCount', JSON.stringify(1000));
     }
    
 }
