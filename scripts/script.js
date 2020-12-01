@@ -24,8 +24,7 @@ function setup() {
     globals.focusChar = document.querySelector('#focusChar'); //focusCharacter.
     globals.afterFocus = document.querySelector('#afterFocus'); //afterFocus character.
     globals.userWPMInput = document.querySelector('#wpmCount'); // input value the user selected
-    globals.userWPMInput.addEventListener('input', updateLocalStorage); // event fired when user changes number
-    globals.userWPMInput.addEventListener('focusout', loadLocalStorage); //event fired when the user removes mouse from 
+    globals.userWPMInput.addEventListener('change', updateLocalStorage); // event fired when user changes number
     if (globals.currentWPMValue != null) { // check if there is anything in localStorage to retrieve 
         loadLocalStorage();
     }
@@ -52,13 +51,17 @@ function loadLocalStorage() {
 function updateLocalStorage(e) { 
     //causes the user to not be able to exceed the boundaries. Fixes the number if it does not conform the data.
     if(globals.userWPMInput.value >= 50 && globals.userWPMInput.value <= 1000) {
-        localStorage.setItem('wpmCount', JSON.stringify(roundFifty(globals.userWPMInput.value)));
+        globals.userWPMInput.value = roundFifty(globals.userWPMInput.value);
+        localStorage.setItem('wpmCount', JSON.stringify(globals.userWPMInput.value));
+
     }
     else if(globals.userWPMInput.value < 50) {
         localStorage.setItem('wpmCount', JSON.stringify(50));
+        globals.userWPMInput.value = 50;
     }
     else{
         localStorage.setItem('wpmCount', JSON.stringify(1000));
+        globals.userWPMInput.value = 1000;
     }
    
 }
