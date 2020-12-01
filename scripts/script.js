@@ -25,6 +25,7 @@ function setup() {
     globals.afterFocus = document.querySelector('#afterFocus'); //afterFocus character.
     globals.userWPMInput = document.querySelector('#wpmCount'); // input value the user selected
     globals.userWPMInput.addEventListener('input', updateLocalStorage); // event fired when user changes number
+    globals.userWPMInput.addEventListener('focusout', loadLocalStorage); //event fired when the user removes mouse from 
     if (globals.currentWPMValue != null) { // check if there is anything in localStorage to retrieve 
         loadLocalStorage();
     }
@@ -48,8 +49,27 @@ function loadLocalStorage() {
  * @author Kristina Amend
  * @return {void} - Does not return any value.
  */
-function updateLocalStorage() { // 
-    localStorage.setItem('wpmCount', JSON.stringify(globals.userWPMInput.value));
+function updateLocalStorage(e) { 
+    //causes the user to not be able to exceed the boundaries. 
+    if(globals.userWPMInput.value >= 50 && globals.userWPMInput.value <= 1000) {
+        localStorage.setItem('wpmCount', JSON.stringify(roundFifty(globals.userWPMInput.value)));
+    }
+   
+}
+/**
+ * @author Juan-Carlos Sreng-Flores
+ * @param {Number} n number to be rounded.
+ * @return {Number} rounded closest to % of fifty.
+ */
+function roundFifty(n) {
+    let lowerbound = n - n%50;
+    let upperbound = lowerbound + 50;
+    if(n-lowerbound>upperbound-n) {
+        return upperbound;
+    }
+    else {
+        return lowerbound;
+    }
 }
 /**
  * function that is triggered by the button event listener
@@ -60,6 +80,7 @@ function updateLocalStorage() { //
  * @return {void} - Does not return any value.
  */
 function startStop() {
+    loadLocalStorage(); //If the user inputted a bad input, the older valid input will appear.
     if (globals.startState) {
         getNext();
         globals.startStopBtn.textContent = "STOP";
