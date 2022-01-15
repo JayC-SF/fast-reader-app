@@ -28,7 +28,7 @@ function setup() {
     if (globals.currentWPMValue != null) { // check if there is anything in localStorage to retrieve 
         loadLocalStorage();
     }
-    else{
+    else {
         document.querySelector('#wpmCount').value = "100"; // set the default value to 100 if nothing in local storage
     }
     globals.startStopBtn = document.querySelector('#stop_start');
@@ -48,22 +48,22 @@ function loadLocalStorage() {
  * @author Kristina Amend
  * @return {void} - Does not return any value.
  */
-function updateLocalStorage(e) { 
+function updateLocalStorage(e) {
     //causes the user to not be able to exceed the boundaries. Fixes the number if it does not conform the data.
-    if(globals.userWPMInput.value >= 50 && globals.userWPMInput.value <= 1000) {
+    if (globals.userWPMInput.value >= 50 && globals.userWPMInput.value <= 1000) {
         globals.userWPMInput.value = roundFifty(globals.userWPMInput.value);
         localStorage.setItem('wpmCount', JSON.stringify(globals.userWPMInput.value));
 
     }
-    else if(globals.userWPMInput.value < 50) {
+    else if (globals.userWPMInput.value < 50) {
         localStorage.setItem('wpmCount', JSON.stringify(50));
         globals.userWPMInput.value = 50;
     }
-    else{
+    else {
         localStorage.setItem('wpmCount', JSON.stringify(1000));
         globals.userWPMInput.value = 1000;
     }
-   
+
 }
 /**
  * @author Juan-Carlos Sreng-Flores
@@ -71,9 +71,9 @@ function updateLocalStorage(e) {
  * @return {Number} rounded closest to % of fifty.
  */
 function roundFifty(n) {
-    let lowerbound = n - n%50;
+    let lowerbound = n - n % 50;
     let upperbound = lowerbound + 50;
-    if(n-lowerbound>upperbound-n) {
+    if (n - lowerbound > upperbound - n) {
         return upperbound;
     }
     else {
@@ -89,7 +89,11 @@ function roundFifty(n) {
  * @return {void} - Does not return any value.
  */
 function startStop() {
-    loadLocalStorage(); //If the user inputted a bad input, the older valid input will appear.
+    if (globals.currentWPMValue != null) { // check if there is anything in localStorage to retrieve 
+        loadLocalStorage(); //If the user inputted a bad input, the older valid input will appear.
+    } else {
+        document.querySelector('#wpmCount').value = "100"; // set the default value to 100 if nothing in local storage
+    }
     if (globals.startState) {
         getNext();
         globals.startStopBtn.textContent = "STOP";
@@ -144,19 +148,19 @@ function strSplitter(json) {
  * @return {void} - this method simply executes the window.setInterval asynchronous function.
  */
 function displayQuote(quoteSplit) {
-    let interval = 60000/globals.userWPMInput.value; // calculates the words per minute
+    let interval = 60000 / globals.userWPMInput.value; // calculates the words per minute
     // counter for interval
     let i = 0;
     //interval loop, calls display quote for specific index, uses modulo to not get index out of bounds.
     //interval variable sets the time between the words to be displayed.
     globals.intervalID = window.setInterval(() => {
-        if(i<quoteSplit.length) {
+        if (i < quoteSplit.length) {
             displayWord(quoteSplit[i]);
             i++;
         }
         else {
             window.clearInterval(globals.intervalID);
-            if(!globals.startState) {
+            if (!globals.startState) {
                 globals.startState = true;
                 startStop();
             }
@@ -182,33 +186,33 @@ function displayQuote(quoteSplit) {
 */
 function displayWord(word) {
     //console.log(word); //Test if it works! to be removed later.    
-    if(word.length <= 1) {
+    if (word.length <= 1) {
         //display 4 spaces before focus character.
         globals.beforeFocus.textContent = '    ';
         //display focus character.
-        globals.focusChar.textContent = word; 
+        globals.focusChar.textContent = word;
         //display nothing after focus character.
         globals.afterFocus.textContent = '';
     }
-    else if(word.length <= 5) {
+    else if (word.length <= 5) {
         //display 3 spaces and the first character before focus character.
-        globals.beforeFocus.textContent = '   ' + word.charAt(0); 
+        globals.beforeFocus.textContent = '   ' + word.charAt(0);
         //display 2nd character of the word.
         globals.focusChar.textContent = word.charAt(1);
         //display from 3rd character to the end if there are any characters left.
         globals.afterFocus.textContent = word.substring(2);
     }
-    else if(word.length <= 9) {
+    else if (word.length <= 9) {
         //display 2 spaces and 1st && 2nd characters of the word.
-        globals.beforeFocus.textContent = '  ' + word.substring(0,2);
+        globals.beforeFocus.textContent = '  ' + word.substring(0, 2);
         //display 3rd character as the focus character.
         globals.focusChar.textContent = word.charAt(2);
         //display rest of the word from 4th to the end.
         globals.afterFocus.textContent = word.substring(3);
     }
-    else if(word.length <= 13) {
+    else if (word.length <= 13) {
         //display 1 space and the first 3 characters.
-        globals.beforeFocus.textContent = ' ' + word.substring(0,3);
+        globals.beforeFocus.textContent = ' ' + word.substring(0, 3);
         //display 4th character as focus character.
         globals.focusChar.textContent = word.charAt(3);
         //display from 5th character to the end.
@@ -216,7 +220,7 @@ function displayWord(word) {
     }
     else {
         //display no spaces and the first 4 characters.
-        globals.beforeFocus.textContent = word.substring(0,4);
+        globals.beforeFocus.textContent = word.substring(0, 4);
         //display 5th character as focus character.
         globals.focusChar.textContent = word.charAt(4);
         //display rest of the string from 6th character to the end.
