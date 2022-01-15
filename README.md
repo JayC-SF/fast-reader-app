@@ -1,4 +1,4 @@
-# fab-project2-ka-js
+# Speed Reader
 420-320-DW JavaScript - Project 2 Speed Reader
 Created by Kristina Amend & Juan-Carlos Sreng-Flores
 
